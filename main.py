@@ -53,10 +53,10 @@ class Scheduler:
     ready_Q: list[Task]
     waiting_Q: list[Task]
     current_time = 0
-    resource: dict[Resource, int]
     running_task_name: str
 
-    def __init__(self):
+    def __init__(self, resource: dict[Resource, int]):
+        self.resource = resource
         self.ready_Q = []
         self.waiting_Q = []
 
@@ -83,7 +83,7 @@ class Scheduler:
     def assign_process(self, assign_type=AlgoModel.FCFS):
         return self.assign_process_by_priority()
 
-    # todo: add a func to initial resources number
+    # todo: work on this method
     def update_queues(self):
         pass
 
@@ -112,13 +112,17 @@ class Scheduler:
             self.current_time += 1
             print(self)
 
+    def free_resources(self, task: Task):
+        for res in task.task_type.resource_type:
+            self.resource[res] += 1
+
     def run(self, algo_type=AlgoModel.FCFS):
         task = self.chose_task()
 
         if algo_type == AlgoModel.FCFS:
             self.run_FCFS()
 
-        # todo: free resources
+        self.free_resources(task)
         # todo: update ready queue
 
     def start(self):
