@@ -50,9 +50,20 @@ class Scheduler:
         self.ready_Q = []
         self.waiting_Q = []
 
-    def add_process(self, process):
+    def add_to_readyQ(self, process):
         self.ready_Q.append(process)
 
-    # def choose_process(self):
-    #     choosed_process = self.ready_Q.sort(key=lambda proc: proc.task.task_type.priority)
-    
+    def add_to_waitingQ(self, process):
+        self.ready_Q.remove(process)
+        self.waiting_Q.append(process)
+
+    def assign_process_by_priority(self):
+        self.ready_Q.sort(key=lambda proc: proc.task.task_type.priority)
+        chased_process: Task = self.ready_Q[0]
+        return chased_process
+        
+    def star(self):
+        pass
+
+    def run(self):
+        pass
