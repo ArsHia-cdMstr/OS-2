@@ -5,12 +5,12 @@ from enum import Enum
 # Note : define the Resources data class (struct)
 @dataclass
 class Resource:
-    number: int
+    name : str
 
 
-R1 = Resource(0)
-R2 = Resource(0)
-R3 = Resource(0)
+R1 = Resource("resource 1")
+R2 = Resource("resource 2")
+R3 = Resource("resource 3")
 
 
 # Note : define the type of tasks dataclass and then initial them
@@ -46,6 +46,7 @@ class Scheduler:
     ready_Q: list[Task]
     waiting_Q: list[Task]
     current_time = 0
+    resource : dict[Resource][int]
 
     def __init__(self):
         self.ready_Q = []
@@ -63,12 +64,26 @@ class Scheduler:
         chased_process: Task or None = self.ready_Q[0]
         return chased_process
 
+    # todo: add a func to initial resources number
+
     def update_queues(self):
         pass
 
     def start(self):
         while self.run():
             pass
+
+    def use_resources(self, task:Task ):
+        satisfy = False
+        for res in task.task_type.resource_type:
+            if self.resource[res] < 1:
+                return satisfy
+
+        satisfy = True
+        for res in task.task_type.resource_type:
+            self.resource[res] -= 1
+
+        return satisfy
 
     def run(self):
         task = self.assign_process_by_priority()
