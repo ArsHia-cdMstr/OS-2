@@ -32,7 +32,7 @@ class Status(Enum):
     waiting = 2
 
 
-class Process:
+class Task:
 
     def __init__(self, name, task_type, status, arrival_time, burst_time):
         self.name: str = name
@@ -40,3 +40,19 @@ class Process:
         self.status: Status = status
         self.arrival_time: int = arrival_time
         self.burst_time: int = burst_time
+
+
+class Scheduler:
+    ready_Q: list[Task]
+    waiting_Q: list[Task]
+
+    def __init__(self):
+        self.ready_Q = []
+        self.waiting_Q = []
+
+    def add_process(self, process):
+        self.ready_Q.append(process)
+
+    # def choose_process(self):
+    #     choosed_process = self.ready_Q.sort(key=lambda proc: proc.task.task_type.priority)
+    
