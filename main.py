@@ -5,12 +5,12 @@ from enum import Enum
 # Note : define the Resources data class (struct)
 @dataclass
 class Resource:
-    name : str
+    name: str
 
 
-R1 = Resource("resource 1")
-R2 = Resource("resource 2")
-R3 = Resource("resource 3")
+R1 = Resource("R1")
+R2 = Resource("R2")
+R3 = Resource("R3")
 
 
 # Note : define the type of tasks dataclass and then initial them
@@ -32,6 +32,13 @@ class Status(Enum):
     waiting = 2
 
 
+class AlgoModel(Enum):
+    FCFS = 'First Come First Serve'
+    RR = 'Round Robin'
+    SJF = 'shortest job first'
+    HRRN = 'highest response ratio next'
+
+
 class Task:
 
     def __init__(self, name, task_type, status, arrival_time, burst_time):
@@ -46,11 +53,19 @@ class Scheduler:
     ready_Q: list[Task]
     waiting_Q: list[Task]
     current_time = 0
-    resource : dict[Resource][int]
+    resource: dict[Resource, int]
+    running_task_name: str
 
     def __init__(self):
         self.ready_Q = []
         self.waiting_Q = []
+
+    def __str__(self):
+        for res, res_number in self.resource.items():
+            print(f"{res.name}: {res_number}\t", end='')
+
+        print(f"\npriority queue: {self.ready_Q}")
+        print(f"waiting queue: {self.waiting_Q}")
 
     def add_to_readyQ(self, process):
         self.ready_Q.append(process)
@@ -60,20 +75,19 @@ class Scheduler:
         self.waiting_Q.append(process)
 
     def assign_process_by_priority(self):
-        self.ready_Q.sort(key=lambda proc: proc.task.task_type.priority)
-        chased_process: Task or None = self.ready_Q[0]
+        self.ready_Q.sort(key=lambda proc: proc.task.task_type.priority, reverse=True)
+        chased_process: Task or None = self.ready_Q.pop()
         return chased_process
 
-    # todo: add a func to initial resources number
+    # todo : work on this method
+    def assign_process(self, assign_type=AlgoModel.FCFS):
+        return self.assign_process_by_priority()
 
+    # todo: add a func to initial resources number
     def update_queues(self):
         pass
 
-    def start(self):
-        while self.run():
-            pass
-
-    def use_resources(self, task:Task ):
+    def can_use_resources(self, task: Task):
         satisfy = False
         for res in task.task_type.resource_type:
             if self.resource[res] < 1:
@@ -85,16 +99,28 @@ class Scheduler:
 
         return satisfy
 
-    def run(self):
-        task = self.assign_process_by_priority()
+    def chose_task(self, algo_type=AlgoModel.FCFS):
+        task = self.assign_process(algo_type)
+        while not self.can_use_resources(task):
+            self.add_to_waitingQ(task)
+            task = self.assign_process(algo_type)
+        self.running_task_name = task.name
+        return task
 
-        # todo: check for the resources
-
-        # if task isn't none
-        if not task:
-            self.current_time += task.burst_time
-        else:
+    def run_FCFS(self, task: Task):
+        for i in range(task.burst_time):
             self.current_time += 1
+            print(self)
+
+    def run(self, algo_type=AlgoModel.FCFS):
+        task = self.chose_task()
+
+        if algo_type == AlgoModel.FCFS:
+            self.run_FCFS()
 
         # todo: free resources
         # todo: update ready queue
+
+    def start(self):
+        while self.run():
+            pass
