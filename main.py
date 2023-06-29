@@ -1,6 +1,5 @@
 from dataclasses import dataclass
-
-from pip._internal.utils.misc import enum
+from enum import Enum
 
 
 # Note : define the Resources data class (struct)
@@ -27,7 +26,17 @@ z = Task_type(1, [R1, R3])
 
 
 # here we will define an enum to determine the status of a process
-class Status(enum):
+class Status(Enum):
     running = 0
     ready = 1
     waiting = 2
+
+
+class Process:
+
+    def __init__(self, name, task_type, status, arrival_time, burst_time):
+        self.name: str = name
+        self.task_type: Task_type = task_type
+        self.status: Status = status
+        self.arrival_time: int = arrival_time
+        self.burst_time: int = burst_time
