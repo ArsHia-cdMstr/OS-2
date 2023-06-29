@@ -83,10 +83,6 @@ class Scheduler:
     def assign_process(self, assign_type=AlgoModel.FCFS):
         return self.assign_process_by_priority()
 
-    # todo: work on this method
-    def update_queues(self):
-        pass
-
     def can_use_resources(self, task: Task):
         satisfy = False
         for res in task.task_type.resource_type:
@@ -116,6 +112,12 @@ class Scheduler:
         for res in task.task_type.resource_type:
             self.resource[res] += 1
 
+    def update_queues(self):
+        for task in self.waiting_Q:
+            for res in task.task_type.resource_type:
+                if self.resource[res] > 0:
+                    self.waiting_Q.remove(task)
+                    self.add_to_readyQ()
     def run(self, algo_type=AlgoModel.FCFS):
         task = self.chose_task()
 
@@ -123,7 +125,7 @@ class Scheduler:
             self.run_FCFS()
 
         self.free_resources(task)
-        # todo: update ready queue
+        self.update_queues()
 
     def start(self):
         while self.run():
