@@ -45,6 +45,7 @@ class Task:
 class Scheduler:
     ready_Q: list[Task]
     waiting_Q: list[Task]
+    current_time = 0
 
     def __init__(self):
         self.ready_Q = []
@@ -59,11 +60,26 @@ class Scheduler:
 
     def assign_process_by_priority(self):
         self.ready_Q.sort(key=lambda proc: proc.task.task_type.priority)
-        chased_process: Task = self.ready_Q[0]
+        chased_process: Task or None = self.ready_Q[0]
         return chased_process
-        
-    def star(self):
+
+    def update_queues(self):
         pass
 
+    def start(self):
+        while self.run():
+            pass
+
     def run(self):
-        pass
+        task = self.assign_process_by_priority()
+
+        # todo: check for the resources
+
+        # if task isn't none
+        if not task:
+            self.current_time += task.burst_time
+        else:
+            self.current_time += 1
+
+        # todo: free resources
+        # todo: update ready queue
