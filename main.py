@@ -3,9 +3,16 @@ from enum import Enum
 
 
 # Note : define the Resources data class (struct)
-@dataclass
+# @dataclass
+# class Resource:
+#     name: str
+
 class Resource:
-    name: str
+    def __init__(self, name: str):
+        self.name = name
+
+    # def __hash__(self):
+    #     return hash(self.name)
 
 
 R1 = Resource("R1")
@@ -54,18 +61,30 @@ class Scheduler:
     _waiting_Q: list[Task]
     _running_task_name: str
 
-    def __init__(self, resource: dict[Resource, int], tasks_list: list[Task]):
+    def __init__(self, resource: dict[Resource, int], tasks_list: list[Task], alogorithm_type: AlgoModel):
         self.resource = resource
         self.ready_Q = tasks_list
         self._waiting_Q: list[Task] = []
         self.current_time = 0
+        self.Algorithm_type = alogorithm_type
 
     def __str__(self):
+        output = ""
+        output += f"time : {self.current_time} sec \n"
         for res, res_number in self.resource.items():
-            print(f"{res.name}: {res_number}\t", end='')
+            output += f"{res.name}: {res_number}\t"
 
-        print(f"\npriority queue: {self.ready_Q}")
-        print(f"waiting queue: {self._waiting_Q}")
+        readyQ_task_str = "[ "
+        waitingQ_task_str = "[ "
+        for task in self.ready_Q:
+            readyQ_task_str += task.name + " "
+        for task in self._waiting_Q:
+            waitingQ_task_str += task.name + " "
+
+        output += f"\nready queue: {readyQ_task_str}]\n"
+        output += f"waiting queue: {waitingQ_task_str}]\n"
+
+        return output
 
     def _add_to_readyQ(self, process):
         self.ready_Q.append(process)
@@ -83,23 +102,32 @@ class Scheduler:
     def _assign_process(self, assign_type=AlgoModel.FCFS):
         return self._assign_process_by_priority()
 
-    def _can_use_resources(self, task: Task):
+    def _can_use_resources(self, task1: Task):
         satisfy = False
-        for res in task.task_type.resource_type:
+        for res in task1.task_type.resource_type:
             if self.resource[res] < 1:
                 return satisfy
 
         satisfy = True
-        for res in task.task_type.resource_type:
+        for res in task1.task_type.resource_type:
             self.resource[res] -= 1
 
         return satisfy
 
     def _chose_task(self, algo_type=AlgoModel.FCFS):
         task = self._assign_process(algo_type)
-        while not self._can_use_resources(task):
+        while not self._can_use_resources(task) and len(self.ready_Q) > 0:
             self._add_to_waitingQ(task)
             task = self._assign_process(algo_type)
+
+        if len(self.ready_Q) == 0:
+            if len(self._waiting_Q) == 0:
+                print("tasks done succesfuly")
+                exit(0)
+            else:
+                print("deadlock accured")
+                exit(1)
+
         self._running_task_name = task.name
         return task
 
@@ -123,37 +151,50 @@ class Scheduler:
         task = self._chose_task()
 
         if algo_type == AlgoModel.FCFS:
-            self._run_FCFS()
+            self._run_FCFS(task)
 
         self._free_resources(task)
         self._update_queues()
 
     def start(self):
-        while self._run():
-            pass
+        while True :
+            self._run(self.Algorithm_type)
 
 
-r1, r2, r3 = [int(x) for x in input("inter number of R1, R2, R3 resources: ").split()]
-task_num = int(input("inter number of tasks: "))
+# r1_number, r2_number, r3_number = [int(x) for x in input("inter number of R1, R2, R3 resources: ").split()]
+# task_num = int(input("inter number of tasks: "))
+#
+# task_list = []
+#
+# for _ in range(task_num):
+#     task = input("inter \'task name\', \'task type\', \'task duration\' : ").split()
+#     task_type: Task_type
+#     if task[1] == 'x':
+#         task_type = x
+#     if task[1] == 'y':
+#         task_type = y
+#     else:
+#         task_type = z
+#
+#     task_list.append(Task(task[0], task_type, Status.ready, 0, int(task[2])))
+#
+# reso = {
+#     "R1": r1_number,
+#     "R2": r2_number,
+#     "R3": r3_number}
 
+
+# Note: this is a test
 task_list = []
 
-for _ in range(task_num):
-    task = input("inter \'task name\', \'task type\', \'task duration\' : ").split()
-    task_type: Task_type
-    if task[1] == 'x':
-        task_type = x
-    if task[1] == 'y':
-        task_type = y
-    else:
-        task_type = z
-
-    task_list.append(Task(task[0], task_type, Status.ready, 0, int(task[2])))
+task_list.append(Task('t1', y, Status.ready, 0, 3))
+task_list.append(Task('t2', x, Status.ready, 0, 6))
+task_list.append(Task('t3', x, Status.ready, 0, 5))
 
 reso = {
-    "R1": r1,
-    "R2": r2,
-    "R3": r3}
+    R1: 1,
+    R2: 1,
+    R3: 1}
 
-FCFS_scheduler = Scheduler(reso, task_list)
+FCFS_scheduler = Scheduler(reso, task_list, alogorithm_type=AlgoModel.FCFS)
 FCFS_scheduler.start()
