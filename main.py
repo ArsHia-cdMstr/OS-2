@@ -61,12 +61,14 @@ class Scheduler:
     _waiting_Q: list[Task]
     _running_task_name: str or None
 
-    def __init__(self, resource: dict[Resource, int], tasks_list: list[Task], alogorithm_type: AlgoModel):
+    def __init__(self, resource: dict[Resource, int], tasks_list: list[Task], algorithm_type: AlgoModel,
+                 Quantum_for_RR: int = 5):
         self.resource = resource
         self.ready_Q = tasks_list
         self._waiting_Q: list[Task] = []
         self.current_time = 0
-        self.Algorithm_type = alogorithm_type
+        self.Algorithm_type = algorithm_type
+        self.quantum = Quantum_for_RR
 
     def __str__(self):
         output = ""
@@ -92,17 +94,26 @@ class Scheduler:
         self.ready_Q.append(process)
 
     def _add_to_waitingQ(self, process):
-        self.ready_Q.remove(process)
         self._waiting_Q.append(process)
 
     def _assign_process_by_priority(self):
         self.ready_Q.sort(key=lambda x: x.task_type.priority, reverse=True)
-        chased_process: Task or None = self.ready_Q.pop()
-        return chased_process
+        chosen_process: Task or None = self.ready_Q.pop()
+        return chosen_process
+
+    def _assign_process_by_first_come(self):
+        chosen_process: Task or None = self.ready_Q.pop(0)
+        return chosen_process
 
     # todo : work on this method
-    def _assign_process(self, assign_type=AlgoModel.FCFS):
-        return self._assign_process_by_priority()
+    def _assign_process(self, algo_type=AlgoModel.FCFS):
+        # Note : if you want to pick FCFS by priority use two below lines
+        # if algo_type == AlgoModel.FCFS:
+        #     return self._assign_process_by_priority()
+        if algo_type == AlgoModel.FCFS:
+            return self._assign_process_by_first_come()
+        if algo_type == AlgoModel.RR:
+            return self._assign_process_by_first_come()
 
     def _can_use_resources(self, task1: Task):
         satisfy = False
@@ -116,7 +127,7 @@ class Scheduler:
 
         return satisfy
 
-    def _chose_task(self, algo_type=AlgoModel.FCFS):
+    def _chose_task(self, algo_type):
 
         if len(self.ready_Q) == 0:
             if len(self._waiting_Q) == 0:
@@ -147,15 +158,30 @@ class Scheduler:
     def _update_queues(self):
         for task in self._waiting_Q:
             for res in task.task_type.resource_type:
-                if self.resource[res] > 0:
-                    self._waiting_Q.remove(task)
-                    self._add_to_readyQ()
+                if self.resource[res] <= 0:
+                    return
+            self._waiting_Q.remove(task)
+            self._add_to_readyQ(task)
 
-    def _run(self, algo_type=AlgoModel.FCFS):
-        task = self._chose_task()
+    def _run_RR(self, task: Task):
+        remainig_time = min(task.burst_time, self.quantum)
+        for _ in range(remainig_time) :
+            print(self)
+            self.current_time += 1
+        print(self)
+        task.burst_time -= remainig_time
+
+        if task.burst_time != 0:
+            self.ready_Q.append(task)
+
+    def _run(self, algo_type):
+        task = self._chose_task(algo_type)
 
         if algo_type == AlgoModel.FCFS:
             self._run_FCFS(task)
+
+        if algo_type == AlgoModel.RR:
+            self._run_RR(task)
 
         self._free_resources(task)
         self._running_task_name = None
@@ -192,16 +218,19 @@ class Scheduler:
 
 
 # Note: this is a test
-task_list = []
-
-task_list.append(Task('t1', y, Status.ready, 0, 3))
-task_list.append(Task('t2', x, Status.ready, 0, 6))
-task_list.append(Task('t3', x, Status.ready, 0, 5))
+task_list = [Task('t1', y, Status.ready, 0, 3),
+             Task('t2', x, Status.ready, 0, 6),
+             Task('t3', x, Status.ready, 0, 5)]
 
 reso = {
     R1: 1,
     R2: 1,
     R3: 1}
 
-FCFS_scheduler = Scheduler(reso, task_list, alogorithm_type=AlgoModel.FCFS)
-FCFS_scheduler.start()
+# FCFS_scheduler = Scheduler(reso, task_list, algorithm_type=AlgoModel.FCFS)
+# FCFS_scheduler.start()
+
+
+RR_scheduler = Scheduler(reso, task_list, algorithm_type=AlgoModel.RR, Quantum_for_RR=2)
+RR_scheduler.start()
+
