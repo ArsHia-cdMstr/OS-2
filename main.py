@@ -63,24 +63,24 @@ class Scheduler:
 
     def __init__(self, resource: dict[Resource, int], tasks_list: list[Task], algorithm_type: AlgoModel,
                  Quantum_for_RR: int = 5):
-        self.resource = resource
-        self.ready_Q: list[Task] = tasks_list
+        self._resource = resource
+        self._ready_Q: list[Task] = tasks_list
         self._waiting_Q: list[Task] = []
-        self.current_time = 0
-        self.Algorithm_type = algorithm_type
-        self.quantum = Quantum_for_RR
+        self._current_time = 0
+        self._Algorithm_type = algorithm_type
+        self._quantum = Quantum_for_RR
 
     def __str__(self):
         output = ""
-        output += f"time : {self.current_time} sec \n"
-        for res, res_number in self.resource.items():
+        output += f"time : {self._current_time} sec \n"
+        for res, res_number in self._resource.items():
             output += f"{res.name}: {res_number}\t"
 
         output += f"\nRunning task : {self._running_task_name}\n"
 
         readyQ_task_str = "[ "
         waitingQ_task_str = "[ "
-        for task in self.ready_Q:
+        for task in self._ready_Q:
             readyQ_task_str += task.name + " "
         for task in self._waiting_Q:
             waitingQ_task_str += task.name + " "
@@ -91,23 +91,23 @@ class Scheduler:
         return output
 
     def _add_to_readyQ(self, process):
-        self.ready_Q.append(process)
+        self._ready_Q.append(process)
 
     def _add_to_waitingQ(self, process):
         self._waiting_Q.append(process)
 
     def _assign_process_by_priority(self):
-        self.ready_Q.sort(key=lambda task: task.task_type.priority, reverse=True)
-        chosen_process: Task or None = self.ready_Q.pop()
+        self._ready_Q.sort(key=lambda task: task.task_type.priority, reverse=True)
+        chosen_process: Task or None = self._ready_Q.pop()
         return chosen_process
 
     def _assign_process_by_first_come(self):
-        chosen_process: Task or None = self.ready_Q.pop(0)
+        chosen_process: Task or None = self._ready_Q.pop(0)
         return chosen_process
 
     def _assign_process_by_shortest_job_first(self):
-        self.ready_Q.sort(key=lambda task: task.burst_time, reverse=True)
-        chosen_process: Task = self.ready_Q.pop()
+        self._ready_Q.sort(key=lambda task: task.burst_time, reverse=True)
+        chosen_process: Task = self._ready_Q.pop()
         return chosen_process
 
     # todo : work on this method
@@ -125,18 +125,18 @@ class Scheduler:
     def _can_use_resources(self, task1: Task):
         satisfy = False
         for res in task1.task_type.resource_type:
-            if self.resource[res] < 1:
+            if self._resource[res] < 1:
                 return satisfy
 
         satisfy = True
         for res in task1.task_type.resource_type:
-            self.resource[res] -= 1
+            self._resource[res] -= 1
 
         return satisfy
 
     def _chose_task(self, algo_type):
 
-        if len(self.ready_Q) == 0:
+        if len(self._ready_Q) == 0:
             if len(self._waiting_Q) == 0:
                 print("*********    tasks done succesfuly   **********")
                 exit(0)
@@ -145,7 +145,7 @@ class Scheduler:
                 exit(1)
 
         task = self._assign_process(algo_type)
-        while not self._can_use_resources(task) and len(self.ready_Q) > 0:
+        while not self._can_use_resources(task) and len(self._ready_Q) > 0:
             self._add_to_waitingQ(task)
             task = self._assign_process(algo_type)
 
@@ -155,36 +155,36 @@ class Scheduler:
     def _run_FCFS(self, task: Task):
         for i in range(task.burst_time):
             print(self)
-            self.current_time += 1
+            self._current_time += 1
         print(self)
 
     def _free_resources(self, task: Task):
         for res in task.task_type.resource_type:
-            self.resource[res] += 1
+            self._resource[res] += 1
 
     def _update_queues(self):
         for task in self._waiting_Q:
             for res in task.task_type.resource_type:
-                if self.resource[res] <= 0:
+                if self._resource[res] <= 0:
                     return
             self._waiting_Q.remove(task)
             self._add_to_readyQ(task)
 
     def _run_RR(self, task: Task):
-        remainig_time = min(task.burst_time, self.quantum)
+        remainig_time = min(task.burst_time, self._quantum)
         for _ in range(remainig_time):
             print(self)
-            self.current_time += 1
+            self._current_time += 1
         print(self)
         task.burst_time -= remainig_time
 
         if task.burst_time != 0:
-            self.ready_Q.append(task)
+            self._ready_Q.append(task)
 
     def _run_SJF(self, task: Task):
         for _ in range(task.burst_time):
             print(self)
-            self.current_time += 1
+            self._current_time += 1
         print(self)
 
     def _run(self, algo_type):
@@ -207,7 +207,7 @@ class Scheduler:
 
     def start(self):
         while True:
-            self._run(self.Algorithm_type)
+            self._run(self._Algorithm_type)
 
 
 # r1_number, r2_number, r3_number = [int(x) for x in input("inter number of R1, R2, R3 resources: ").split()]
