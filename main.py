@@ -32,7 +32,6 @@ x = Task_type('x', 3, [R1, R2])
 y = Task_type('y', 2, [R2, R3])
 z = Task_type('z', 1, [R1, R3])
 
-
 # here we will define an enum to determine the status of a process
 class Status(Enum):
     running = 0
@@ -110,6 +109,11 @@ class Scheduler:
         chosen_process: Task = self._ready_Q.pop()
         return chosen_process
 
+    def _assign_process_for_HRRN(self):
+        self._ready_Q.sort(key=lambda task: ((self._current_time - task.burst_time) / task.burst_time))
+        chosen_process: Task = self._ready_Q.pop()
+        return chosen_process
+
     # todo : work on this method
     def _assign_process(self, algo_type=AlgoModel.FCFS):
         # Note : if you want to pick FCFS by priority use two below lines
@@ -121,6 +125,8 @@ class Scheduler:
             return self._assign_process_by_first_come()
         if algo_type == AlgoModel.SJF:
             return self._assign_process_by_shortest_job_first()
+        if algo_type == AlgoModel.HRRN:
+            return self._assign_process_for_HRRN()
 
     def _can_use_resources(self, task1: Task):
         satisfy = False
@@ -199,6 +205,9 @@ class Scheduler:
         if algo_type == AlgoModel.SJF:
             self._run_SJF(task)
 
+        if algo_type == AlgoModel.HRRN:
+            self._run_FCFS(task)
+
         self._free_resources(task)
         self._running_task_name = None
         self._update_queues()
@@ -252,3 +261,6 @@ reso = {
 
 SJF = Scheduler(reso, task_list, algorithm_type=AlgoModel.SJF)
 SJF.start()
+
+hrrn = Scheduler(reso, task_list, algorithm_type=AlgoModel.HRRN)
+hrrn.start()
