@@ -79,7 +79,7 @@ and with implementing it we will reach below tasks order:
 
 as you see the shorter job will be done sooner 
 
-# HRRN 
+# 4 - HRRN 
 in here we have an algorithm to calculate priority and that's
 <br>
 ![img.png](img.png)
