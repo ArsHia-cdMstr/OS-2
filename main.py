@@ -64,7 +64,7 @@ class Scheduler:
     def __init__(self, resource: dict[Resource, int], tasks_list: list[Task], algorithm_type: AlgoModel,
                  Quantum_for_RR: int = 5):
         self.resource = resource
-        self.ready_Q = tasks_list
+        self.ready_Q: list[Task] = tasks_list
         self._waiting_Q: list[Task] = []
         self.current_time = 0
         self.Algorithm_type = algorithm_type
@@ -97,12 +97,17 @@ class Scheduler:
         self._waiting_Q.append(process)
 
     def _assign_process_by_priority(self):
-        self.ready_Q.sort(key=lambda x: x.task_type.priority, reverse=True)
+        self.ready_Q.sort(key=lambda task: task.task_type.priority, reverse=True)
         chosen_process: Task or None = self.ready_Q.pop()
         return chosen_process
 
     def _assign_process_by_first_come(self):
         chosen_process: Task or None = self.ready_Q.pop(0)
+        return chosen_process
+
+    def _assign_process_by_shortest_job_first(self):
+        self.ready_Q.sort(key=lambda task: task.burst_time, reverse=True)
+        chosen_process: Task = self.ready_Q.pop()
         return chosen_process
 
     # todo : work on this method
@@ -114,6 +119,8 @@ class Scheduler:
             return self._assign_process_by_first_come()
         if algo_type == AlgoModel.RR:
             return self._assign_process_by_first_come()
+        if algo_type == AlgoModel.SJF:
+            return self._assign_process_by_shortest_job_first()
 
     def _can_use_resources(self, task1: Task):
         satisfy = False
@@ -165,7 +172,7 @@ class Scheduler:
 
     def _run_RR(self, task: Task):
         remainig_time = min(task.burst_time, self.quantum)
-        for _ in range(remainig_time) :
+        for _ in range(remainig_time):
             print(self)
             self.current_time += 1
         print(self)
@@ -173,6 +180,12 @@ class Scheduler:
 
         if task.burst_time != 0:
             self.ready_Q.append(task)
+
+    def _run_SJF(self, task: Task):
+        for _ in range(task.burst_time):
+            print(self)
+            self.current_time += 1
+        print(self)
 
     def _run(self, algo_type):
         task = self._chose_task(algo_type)
@@ -182,6 +195,9 @@ class Scheduler:
 
         if algo_type == AlgoModel.RR:
             self._run_RR(task)
+
+        if algo_type == AlgoModel.SJF:
+            self._run_SJF(task)
 
         self._free_resources(task)
         self._running_task_name = None
@@ -231,6 +247,8 @@ reso = {
 # FCFS_scheduler.start()
 
 
-RR_scheduler = Scheduler(reso, task_list, algorithm_type=AlgoModel.RR, Quantum_for_RR=2)
-RR_scheduler.start()
+# RR_scheduler = Scheduler(reso, task_list, algorithm_type=AlgoModel.RR, Quantum_for_RR=2)
+# RR_scheduler.start()
 
+SJF = Scheduler(reso, task_list, algorithm_type=AlgoModel.SJF)
+SJF.start()
