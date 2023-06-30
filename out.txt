@@ -1,0 +1,807 @@
+1 - FCFS ----------------------------------------------
+
+
+time : 0 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 t1 t3 ]
+waiting queue: [ ]
+
+time : 1 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 t1 t3 ]
+waiting queue: [ ]
+
+time : 2 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 t1 t3 ]
+waiting queue: [ ]
+
+time : 3 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 t1 t3 ]
+waiting queue: [ ]
+
+time : 4 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 t1 t3 ]
+waiting queue: [ ]
+
+time : 5 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 t1 t3 ]
+waiting queue: [ ]
+
+time : 6 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 t1 t3 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 6 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t4 t1 t3 ]
+waiting queue: [ ]
+
+time : 6 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 ]
+waiting queue: [ ]
+
+time : 7 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 ]
+waiting queue: [ ]
+
+time : 8 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 ]
+waiting queue: [ ]
+
+time : 9 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 ]
+waiting queue: [ ]
+
+time : 10 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 ]
+waiting queue: [ ]
+
+time : 11 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 ]
+waiting queue: [ ]
+
+time : 12 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 ]
+waiting queue: [ ]
+
+time : 13 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 ]
+waiting queue: [ ]
+
+time : 14 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 ]
+waiting queue: [ ]
+
+time : 15 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 ]
+waiting queue: [ ]
+
+time : 16 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 16 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t1 t3 ]
+waiting queue: [ ]
+
+time : 16 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t3 ]
+waiting queue: [ ]
+
+time : 17 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t3 ]
+waiting queue: [ ]
+
+time : 18 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t3 ]
+waiting queue: [ ]
+
+time : 19 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t3 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 19 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t3 ]
+waiting queue: [ ]
+
+time : 19 sec
+R1: 1	R2: 1	R3: 2
+Running task : t3
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 20 sec
+R1: 1	R2: 1	R3: 2
+Running task : t3
+ready queue: [ ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 20 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ ]
+waiting queue: [ ]
+
+t2 => t4 => t1 => t3 => end
+
+*********    tasks done succesfuly   **********
+
+
+2 - Round Robin ----------------------------------------------------------------
+
+time : 0 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 t1 t3 ]
+waiting queue: [ ]
+
+time : 1 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 t1 t3 ]
+waiting queue: [ ]
+
+time : 2 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 t1 t3 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 2 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t4 t1 t3 t2 ]
+waiting queue: [ ]
+
+time : 2 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 t2 ]
+waiting queue: [ ]
+
+time : 3 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 t2 ]
+waiting queue: [ ]
+
+time : 4 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t3 t2 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 4 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t1 t3 t2 t4 ]
+waiting queue: [ ]
+
+time : 4 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t3 t2 t4 ]
+waiting queue: [ ]
+
+time : 5 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t3 t2 t4 ]
+waiting queue: [ ]
+
+time : 6 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t3 t2 t4 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 6 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t3 t2 t4 t1 ]
+waiting queue: [ ]
+
+time : 6 sec
+R1: 1	R2: 1	R3: 2
+Running task : t3
+ready queue: [ t2 t4 t1 ]
+waiting queue: [ ]
+
+time : 7 sec
+R1: 1	R2: 1	R3: 2
+Running task : t3
+ready queue: [ t2 t4 t1 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 7 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t2 t4 t1 ]
+waiting queue: [ ]
+
+time : 7 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 t1 ]
+waiting queue: [ ]
+
+time : 8 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 t1 ]
+waiting queue: [ ]
+
+time : 9 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 t1 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 9 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t4 t1 t2 ]
+waiting queue: [ ]
+
+time : 9 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t2 ]
+waiting queue: [ ]
+
+time : 10 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t2 ]
+waiting queue: [ ]
+
+time : 11 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ t1 t2 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 11 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t1 t2 t4 ]
+waiting queue: [ ]
+
+time : 11 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t2 t4 ]
+waiting queue: [ ]
+
+time : 12 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t2 t4 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 12 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t2 t4 ]
+waiting queue: [ ]
+
+time : 12 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 13 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 14 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 14 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 14 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 15 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 16 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 16 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 16 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 17 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 18 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 18 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 18 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 19 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 20 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 20 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ ]
+waiting queue: [ ]
+
+t2 => t4 => t1 => t3 => t2 => t4 => t1 => t2 => t4 => t4 => t4 => end
+
+*********    tasks done succesfuly   **********
+
+
+3 - SJF -------------------------------------------------------
+
+
+time : 0 sec
+R1: 1	R2: 1	R3: 2
+Running task : t3
+ready queue: [ t4 t2 t1 ]
+waiting queue: [ ]
+
+time : 1 sec
+R1: 1	R2: 1	R3: 2
+Running task : t3
+ready queue: [ t4 t2 t1 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 1 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t4 t2 t1 ]
+waiting queue: [ ]
+
+time : 1 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t4 t2 ]
+waiting queue: [ ]
+
+time : 2 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t4 t2 ]
+waiting queue: [ ]
+
+time : 3 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t4 t2 ]
+waiting queue: [ ]
+
+time : 4 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t4 t2 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 4 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t4 t2 ]
+waiting queue: [ ]
+
+time : 4 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 5 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 6 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 7 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 8 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 9 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 10 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 10 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 10 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 11 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 12 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 13 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 14 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 15 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 16 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 17 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 18 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 19 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 20 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 20 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ ]
+waiting queue: [ ]
+
+t3 => t1 => t2 => t4 => end
+
+*********    tasks done succesfuly   **********
+
+
+4 _ HRRN ----------------------------------------------
+
+time : 0 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t1 t3 t4 ]
+waiting queue: [ ]
+
+time : 1 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t1 t3 t4 ]
+waiting queue: [ ]
+
+time : 2 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t1 t3 t4 ]
+waiting queue: [ ]
+
+time : 3 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t1 t3 t4 ]
+waiting queue: [ ]
+
+time : 4 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t1 t3 t4 ]
+waiting queue: [ ]
+
+time : 5 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t1 t3 t4 ]
+waiting queue: [ ]
+
+time : 6 sec
+R1: 1	R2: 2	R3: 1
+Running task : t2
+ready queue: [ t1 t3 t4 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 6 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t1 t3 t4 ]
+waiting queue: [ ]
+
+time : 6 sec
+R1: 1	R2: 1	R3: 2
+Running task : t3
+ready queue: [ t4 t1 ]
+waiting queue: [ ]
+
+time : 7 sec
+R1: 1	R2: 1	R3: 2
+Running task : t3
+ready queue: [ t4 t1 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 7 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t4 t1 ]
+waiting queue: [ ]
+
+time : 7 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 8 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 9 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 10 sec
+R1: 1	R2: 1	R3: 2
+Running task : t1
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 10 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ t4 ]
+waiting queue: [ ]
+
+time : 10 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 11 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 12 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 13 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 14 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 15 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 16 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 17 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 18 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 19 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+time : 20 sec
+R1: 2	R2: 1	R3: 1
+Running task : t4
+ready queue: [ ]
+waiting queue: [ ]
+
+after resource free up : ________________
+time : 20 sec
+R1: 2	R2: 2	R3: 2
+Running task : None
+ready queue: [ ]
+waiting queue: [ ]
+
+t2 => t3 => t1 => t4 => end
+
+*********    tasks done succesfuly   **********
