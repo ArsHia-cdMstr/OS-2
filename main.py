@@ -2,17 +2,9 @@ from dataclasses import dataclass
 from enum import Enum
 
 
-# Note : define the Resources data class (struct)
-# @dataclass
-# class Resource:
-#     name: str
-
 class Resource:
     def __init__(self, name: str):
         self.name = name
-
-    # def __hash__(self):
-    #     return hash(self.name)
 
 
 R1 = Resource("R1")
@@ -31,6 +23,7 @@ class Task_type:
 x = Task_type('x', 3, [R1, R2])
 y = Task_type('y', 2, [R2, R3])
 z = Task_type('z', 1, [R1, R3])
+
 
 # here we will define an enum to determine the status of a process
 class Status(Enum):
@@ -218,7 +211,7 @@ class Scheduler:
         if self._Algorithm_type == AlgoModel.RR or self._Algorithm_type == AlgoModel.FCFS:
             self._ready_Q.sort(key=lambda task: task.task_type.priority)
         else:
-            self._ready_Q.sort(key=lambda task: task.task_type.priority , reverse=True)
+            self._ready_Q.sort(key=lambda task: task.task_type.priority, reverse=True)
         while True:
             self._run(self._Algorithm_type)
 
@@ -258,14 +251,15 @@ class Scheduler:
 
 ###########################  test2 ----------------------------
 
-task_list = [Task('t1', y, Status.ready, 0, 3),
-             Task('t2', x, Status.ready, 0, 6),
-             Task('t3', z, Status.ready, 0, 1),
-             Task('t4', x, Status.ready, 0, 5),
-             Task('t5', z, Status.ready, 0, 5)]
+task_list = [Task('t1', x, Status.ready, 0, 3),
+             Task('t2', z, Status.ready, 0, 6),
+             Task('t3', x, Status.ready, 0, 1),
+             Task('t4', y, Status.ready, 0, 10),
+             Task('t5', y, Status.ready, 0, 5),
+             Task('t6', z, Status.ready, 0, 15)]
 
 reso = {
-    R1:2,
+    R1: 2,
     R2: 2,
     R3: 2
 }
