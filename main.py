@@ -59,7 +59,7 @@ class Task:
 
 class Scheduler:
     _waiting_Q: list[Task]
-    _running_task_name: str
+    _running_task_name: str or None
 
     def __init__(self, resource: dict[Resource, int], tasks_list: list[Task], alogorithm_type: AlgoModel):
         self.resource = resource
@@ -74,6 +74,8 @@ class Scheduler:
         for res, res_number in self.resource.items():
             output += f"{res.name}: {res_number}\t"
 
+        output += f"\nRunning task : {self._running_task_name}\n"
+
         readyQ_task_str = "[ "
         waitingQ_task_str = "[ "
         for task in self.ready_Q:
@@ -81,7 +83,7 @@ class Scheduler:
         for task in self._waiting_Q:
             waitingQ_task_str += task.name + " "
 
-        output += f"\nready queue: {readyQ_task_str}]\n"
+        output += f"ready queue: {readyQ_task_str}]\n"
         output += f"waiting queue: {waitingQ_task_str}]\n"
 
         return output
@@ -115,26 +117,28 @@ class Scheduler:
         return satisfy
 
     def _chose_task(self, algo_type=AlgoModel.FCFS):
+
+        if len(self.ready_Q) == 0:
+            if len(self._waiting_Q) == 0:
+                print("*********    tasks done succesfuly   **********")
+                exit(0)
+            else:
+                print("_________________ deadlock accured __________________")
+                exit(1)
+
         task = self._assign_process(algo_type)
         while not self._can_use_resources(task) and len(self.ready_Q) > 0:
             self._add_to_waitingQ(task)
             task = self._assign_process(algo_type)
-
-        if len(self.ready_Q) == 0:
-            if len(self._waiting_Q) == 0:
-                print("tasks done succesfuly")
-                exit(0)
-            else:
-                print("deadlock accured")
-                exit(1)
 
         self._running_task_name = task.name
         return task
 
     def _run_FCFS(self, task: Task):
         for i in range(task.burst_time):
-            self.current_time += 1
             print(self)
+            self.current_time += 1
+        print(self)
 
     def _free_resources(self, task: Task):
         for res in task.task_type.resource_type:
@@ -154,10 +158,13 @@ class Scheduler:
             self._run_FCFS(task)
 
         self._free_resources(task)
+        self._running_task_name = None
         self._update_queues()
+        print("after resource free up : ________________")
+        print(self)
 
     def start(self):
-        while True :
+        while True:
             self._run(self.Algorithm_type)
 
 
