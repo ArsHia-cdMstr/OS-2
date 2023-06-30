@@ -52,6 +52,7 @@ class Task:
 class Scheduler:
     _waiting_Q: list[Task]
     _running_task_name: str or None
+    tasks_order = ""
 
     def __init__(self, resource: dict[Resource, int], tasks_list: list[Task], algorithm_type: AlgoModel,
                  Quantum_for_RR: int = 5):
@@ -136,6 +137,7 @@ class Scheduler:
     def _chose_task(self, algo_type):
 
         if len(self._ready_Q) == 0:
+            print(self.tasks_order + "end\n")
             if len(self._waiting_Q) == 0:
                 print("*********    tasks done succesfuly   **********")
                 exit(0)
@@ -200,7 +202,7 @@ class Scheduler:
 
         if algo_type == AlgoModel.HRRN:
             self._run_FCFS(task)
-
+        self.tasks_order += task.name + " => "
         self._free_resources(task)
         self._running_task_name = None
         self._update_queues()
@@ -255,8 +257,9 @@ task_list = [Task('t1', x, Status.ready, 0, 3),
              Task('t2', z, Status.ready, 0, 6),
              Task('t3', x, Status.ready, 0, 1),
              Task('t4', y, Status.ready, 0, 10),
-             Task('t5', y, Status.ready, 0, 5),
-             Task('t6', z, Status.ready, 0, 15)]
+             # Task('t5', y, Status.ready, 0, 5),
+             # Task('t6', z, Status.ready, 0, 15)
+             ]
 
 reso = {
     R1: 2,
