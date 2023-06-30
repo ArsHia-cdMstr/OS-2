@@ -215,6 +215,10 @@ class Scheduler:
         print(self)
 
     def start(self):
+        if self._Algorithm_type == AlgoModel.RR or self._Algorithm_type == AlgoModel.FCFS:
+            self._ready_Q.sort(key=lambda task: task.task_type.priority)
+        else:
+            self._ready_Q.sort(key=lambda task: task.task_type.priority , reverse=True)
         while True:
             self._run(self._Algorithm_type)
 
@@ -241,16 +245,30 @@ class Scheduler:
 #     "R2": r2_number,
 #     "R3": r3_number}
 
-
+########################### test1 ---------------------------
 # Note: this is a test
+# task_list = [Task('t1', y, Status.ready, 0, 3),
+#              Task('t2', x, Status.ready, 0, 6),
+#              Task('t3', x, Status.ready, 0, 5)]
+#
+# reso = {
+#     R1: 1,
+#     R2: 1,
+#     R3: 1}
+
+###########################  test2 ----------------------------
+
 task_list = [Task('t1', y, Status.ready, 0, 3),
              Task('t2', x, Status.ready, 0, 6),
-             Task('t3', x, Status.ready, 0, 5)]
+             Task('t3', z, Status.ready, 0, 1),
+             Task('t4', x, Status.ready, 0, 5),
+             Task('t5', z, Status.ready, 0, 5)]
 
 reso = {
-    R1: 1,
-    R2: 1,
-    R3: 1}
+    R1:2,
+    R2: 2,
+    R3: 2
+}
 
 # FCFS_scheduler = Scheduler(reso, task_list, algorithm_type=AlgoModel.FCFS)
 # FCFS_scheduler.start()
@@ -259,8 +277,8 @@ reso = {
 # RR_scheduler = Scheduler(reso, task_list, algorithm_type=AlgoModel.RR, Quantum_for_RR=2)
 # RR_scheduler.start()
 
-SJF = Scheduler(reso, task_list, algorithm_type=AlgoModel.SJF)
-SJF.start()
+# SJF = Scheduler(reso, task_list, algorithm_type=AlgoModel.SJF)
+# SJF.start()
 
 hrrn = Scheduler(reso, task_list, algorithm_type=AlgoModel.HRRN)
 hrrn.start()
