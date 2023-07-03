@@ -165,11 +165,17 @@ class Scheduler:
 
     def _update_queues(self):
         for task in self._waiting_Q:
+            addable_to_ready_queue = True
             for res in task.task_type.resource_type:
                 if self._resource[res] <= 0:
-                    return
-            self._waiting_Q.remove(task)
-            self._add_to_readyQ(task)
+                    addable_to_ready_queue = False
+                    break
+
+            if addable_to_ready_queue:
+                self._waiting_Q.remove(task)
+                self._add_to_readyQ(task)
+            else:
+                task.task_type.priority += 1
 
     def _run_RR(self, task: Task):
         remainig_time = min(task.burst_time, self._quantum)

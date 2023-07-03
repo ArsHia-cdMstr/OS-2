@@ -46,7 +46,31 @@ and then when we call `free_resources()` we will free the resources we don't nee
 then we will make the `runnig_task` into __None__ and then, we will update the ready Queue and waiting Queue
 <br>
 and after that we will print the status that we are in it
-<br><br>
+<br>
+# starvation
+if a task fall into waiting queue, and it waits 
+for the resources, and it doesn't get a resource for a long time 
+starvation will happen, so if we increase the priority of the tasks 
+that they stayed in waiting queue we will stop starvation 
+```python
+    def _update_queues(self):
+        for task in self._waiting_Q:
+            addable_to_ready_queue = True
+            for res in task.task_type.resource_type:
+                if self._resource[res] <= 0:
+                    addable_to_ready_queue = False
+                    break
+
+            if addable_to_ready_queue:
+                self._waiting_Q.remove(task)
+                self._add_to_readyQ(task)
+            else:
+                task.task_type.priority += 1
+```
+
+like here that when we can't come from waiting queue into ready queue we will 
+increase priority of that task
+<br>
 # tests :
 with below tasks and resources we will run the project
 <br>with assuming __arrival time__ is __zero__
